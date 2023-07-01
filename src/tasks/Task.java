@@ -1,4 +1,6 @@
-import java.util.Objects;
+package tasks;
+
+import managers.Status;
 
 public class Task {
     protected Integer id;
@@ -46,7 +48,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
+        return "tasks.Task{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
