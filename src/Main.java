@@ -48,14 +48,14 @@ public class Main {
         System.out.println("\n" + taskManager.getAllEpic() + "\n");
         System.out.println("\n" + taskManager.getAllSubtask() + "\n");
 
-        System.out.println("2.2");
-        taskManager.successAllTasks();
-        System.out.println("\n" + taskManager.getAllTasks() + "\n");
-        taskManager.successAllEpic();
-        System.out.println("\n" + taskManager.getAllEpic() + "\n");
-        taskManager.successAllSubtask();
-        System.out.println("\n" + taskManager.getAllSubtask() + "\n");
-        System.out.println("\n" + taskManager.getAllEpic() + "\n");
+//        System.out.println("2.2");
+//        taskManager.deleteAllTasks();
+//        System.out.println("\n" + taskManager.getAllTasks() + "\n");
+//        taskManager.deleteAllEpic();
+//        System.out.println("\n" + taskManager.getAllEpic() + "\n");
+//        taskManager.deleteAllSubtask();
+//        System.out.println("\n" + taskManager.getAllSubtask() + "\n");
+//        System.out.println("\n" + taskManager.getAllEpic() + "\n");
 
 
         System.out.println("2.3");
@@ -81,17 +81,17 @@ public class Main {
         taskManager.updateTask(task1);
         System.out.println("\n" + taskManager.getAllTasks() + "\n");
 
-        System.out.println("2.6");
-        System.out.println("\n" + taskManager.getAllSubtask() + "\n");
-        taskManager.deleteEpicByID(epic1.getId());
-        System.out.println("\n" + taskManager.getAllEpic() + "\n");
-        System.out.println("\n" + taskManager.getAllSubtask() + "\n");
-        taskManager.deleteSubtaskByID(20);
-        taskManager.deleteSubtaskByID(subtask2.getId());
-        System.out.println("\n" + taskManager.getAllEpic() + "\n");
-        System.out.println("\n" + taskManager.getAllSubtask() + "\n");
-        taskManager.deleteTaskByID(task2.getId());
-        System.out.println("\n" + taskManager.getAllTasks() + "\n");
+//        System.out.println("2.6");
+//        System.out.println("\n" + taskManager.getAllSubtask() + "\n");
+//        taskManager.deleteEpicByID(epic1.getId());
+//        System.out.println("\n" + taskManager.getAllEpic() + "\n");
+//        System.out.println("\n" + taskManager.getAllSubtask() + "\n");
+//        taskManager.deleteSubtaskByID(20);
+//        taskManager.deleteSubtaskByID(subtask2.getId());
+//        System.out.println("\n" + taskManager.getAllEpic() + "\n");
+//        System.out.println("\n" + taskManager.getAllSubtask() + "\n");
+//        taskManager.deleteTaskByID(task2.getId());
+//        System.out.println("\n" + taskManager.getAllTasks() + "\n");
 
         subtask1.setStatus(Status.DONE);
         subtask2.setStatus(Status.DONE);

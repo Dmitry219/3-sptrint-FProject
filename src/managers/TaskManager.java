@@ -60,16 +60,16 @@ public class TaskManager {
         return saveSubtask.get(id);
     }
 
-    public void successAllTasks (){//Удаление всех tasks.Task
+    public void deleteAllTasks (){//Удаление всех tasks.Task
         saveTask.clear();
     }
 
-    public void successAllEpic (){//Удаление всех tasks.Epic
+    public void deleteAllEpic (){//Удаление всех tasks.Epic
         saveSubtask.clear();
         saveEpic.clear();
     }
 
-    public void successAllSubtask (){//Удаление всех tasks.Subtask
+    public void deleteAllSubtask (){//Удаление всех tasks.Subtask
         for(Integer epic : saveEpic.keySet()){
             saveEpic.get(epic).getSubtaskIDs().clear();
         }
@@ -118,26 +118,27 @@ public class TaskManager {
         int newCount = 0;
         int doneCount = 0;
 
-        for(Integer i : epic.getSubtaskIDs()){
-            for(Subtask s : saveSubtask.values()){
-                if(i == s.getId()){
-                    if (s.getStatus() == Status.NEW){
-                        newCount++;
-                    }else if(s.getStatus() == Status.DONE){
-                        doneCount++;
-                    }
-                }
-
+        for(Integer i : epic.getSubtaskIDs()) {
+            Subtask s = saveSubtask.get(i);
+            switch (s.getStatus()) {
+                case NEW:
+                    newCount++;
+                    break;
+                case DONE:
+                    doneCount++;
+                    break;
+                case IN_PROGRESS:
+                    break;
             }
         }
 
-        if (newCount == epic.getSubtaskIDs().size()){
-            epic.setStatus(Status.NEW);
-        } else if (doneCount == epic.getSubtaskIDs().size()) {
-            epic.setStatus(Status.DONE);
-        }else{
-            epic.setStatus(Status.IN_PROGRESS);
-        }
+            if (newCount == epic.getSubtaskIDs().size()){
+                epic.setStatus(Status.NEW);
+            } else if (doneCount == epic.getSubtaskIDs().size()) {
+                epic.setStatus(Status.DONE);
+            }else{
+                epic.setStatus(Status.IN_PROGRESS);
+            }
     }
 
     public void listOfAllSubtasksOfASpecificEpic(Epic epic){//Получение списка всех подзадач определённого tasks.Epic
