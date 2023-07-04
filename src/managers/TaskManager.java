@@ -76,6 +76,7 @@ public class TaskManager {
 
         saveSubtask.clear();
 
+
     }
 
     public void deleteTaskByID (int id){//удалить по идентификатору tasks.Task
@@ -94,10 +95,11 @@ public class TaskManager {
             return;
         }
 
-        int epicId = saveSubtask.get(id).getEpicId();
+        int idEpic = saveSubtask.get(id).getEpicId();
 
-        saveEpic.get(epicId).getSubtaskIDs().remove((Integer) id);
+        saveEpic.get(idEpic).getSubtaskIDs().remove((Integer) id);
         saveSubtask.remove(id);
+        updateEpicStatus(idEpic);
     }
 
     public void updateTask(Task task) { //Обновление tasks.Task
@@ -109,8 +111,31 @@ public class TaskManager {
         saveTask.put(task.getId(), task);
     }
 
-    public void updateEpicAndSubtask(Epic epic) { //Обновление tasks.Epic и tasks.Subtask
+    public void updateEpic(Epic epic){//обновление Epic
+        Epic newEpic = saveEpic.get(epic.getId());
+        newEpic.setName(epic.getName());
+        newEpic.setDescription(epic.getDescription());
+    }
 
+    public void updateSubtask (Subtask subtask){//обновление Subtask
+        int id = subtask.getId();
+        int idEpic = subtask.getEpicId();
+        Subtask subtask1 = saveSubtask.get(id);
+        if (subtask1 == null){
+            return;
+        }
+
+        Epic epic = saveEpic.get(idEpic);
+        if (epic == null){
+            return;
+        }
+
+        saveSubtask.put(id, subtask);
+        updateEpicStatus(idEpic);
+    }
+
+    public void updateEpicStatus(int idEpic) { //Обновление статуса Epic
+        Epic epic = saveEpic.get(idEpic);
         if (!saveEpic.containsKey(epic.getId())){
             return;
         }

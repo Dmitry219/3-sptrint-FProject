@@ -165,11 +165,11 @@ public class Main {
         subtask6 = taskManager.createSubtask(subtask6);
 
 
-        taskManager.updateEpicAndSubtask(epic1);
+        taskManager.updateEpicStatus(epic1.getId());
         System.out.println("\n" + taskManager.getAllEpic() + "\n");
         subtask3.setStatus(managers.Status.DONE);
 
-        taskManager.updateEpicAndSubtask(epic1);
+        taskManager.updateEpicStatus(epic1.getId());
         System.out.println("\n" + taskManager.getAllEpic() + "\n");
         subtask1.setStatus(Status.DONE);
         subtask2.setStatus(Status.DONE);
@@ -177,13 +177,22 @@ public class Main {
         subtask4.setStatus(Status.DONE);
         subtask5.setStatus(Status.DONE);
         subtask6.setStatus(Status.DONE);
-        taskManager.updateEpicAndSubtask(epic1);
+        Subtask subtask9 = new Subtask("Дима", "Долго думал", epic1.getId());
+        taskManager.createSubtask(subtask9);
+        taskManager.updateSubtask(subtask9);
+
+        taskManager.updateEpicStatus(epic1.getId());
+        taskManager.updateEpic(epic1);
         System.out.println("\n" + taskManager.getAllEpic() + "\n");
+        //taskManager.deleteSubtaskByID(subtask3.getId());
+        System.out.println("\n" + taskManager.getAllEpic() + "\n");
+        taskManager.updateEpicStatus(epic1.getId());
+        System.out.println("\n" + taskManager.getAllEpic() + "\n");
+        //taskManager.deleteEpicByID(epic1.getId());
+        //System.out.println("\n" + taskManager.getAllEpic() + "\n");
+        //System.out.println("\n" + taskManager.getAllSubtask() + "\n");
         taskManager.deleteSubtaskByID(subtask3.getId());
-        System.out.println("\n" + taskManager.getAllEpic() + "\n");
-        taskManager.updateEpicAndSubtask(epic1);
-        System.out.println("\n" + taskManager.getAllEpic() + "\n");
-        taskManager.deleteEpicByID(epic1.getId());
+        taskManager.deleteSubtaskByID(subtask9.getId());
         System.out.println("\n" + taskManager.getAllEpic() + "\n");
         System.out.println("\n" + taskManager.getAllSubtask() + "\n");
     }
