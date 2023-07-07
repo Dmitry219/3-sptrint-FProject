@@ -22,7 +22,7 @@ public class Epic extends Task {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +
-                '}';
+                '}' + "\n";
     }
 
     public ArrayList<Integer> getSubtaskIDs() {
