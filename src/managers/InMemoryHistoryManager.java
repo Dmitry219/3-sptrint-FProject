@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    List<Task> viewedTasks = new ArrayList<>();
-    static final int LIST_SIZE = 10;
+    private final List<Task> viewedTasks = new ArrayList<>();
+    private static final int LIST_SIZE = 10;
     @Override
     public void add(Task task){
         if(viewedTasks.size() == LIST_SIZE){
@@ -15,6 +15,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
         viewedTasks.add(task);
     }
+
     @Override
     public List<Task> getHistory(){
         return viewedTasks;

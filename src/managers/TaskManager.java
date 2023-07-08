@@ -5,6 +5,7 @@ import tasks.Subtask;
 import tasks.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface TaskManager {
 
@@ -14,11 +15,11 @@ public interface TaskManager {
 
     Task createTask(Task task);//Создание tasks.Task
 
-    ArrayList<Task> getAllTasks();//Получение списка всех tasks.Task
+    List<Task> getAllTasks();//Получение списка всех tasks.Task
 
-    ArrayList<Task> getAllEpic();//Получение списка всех tasks.Epic
+    List<Task> getAllEpic();//Получение списка всех tasks.Epic
 
-    ArrayList<Task> getAllSubtask();//Получение списка всех tasks.Subtask
+    List<Task> getAllSubtask();//Получение списка всех tasks.Subtask
 
     Task getTaskById (int id);//Получение по идентификатору tasks.Task
 
@@ -40,13 +41,13 @@ public interface TaskManager {
 
     void updateTask(Task task); //Обновление tasks.Task
 
-
     void updateEpic(Epic epic);//обновление Epic
 
     void updateSubtask (Subtask subtask);//обновление Subtask
 
-
     void updateEpicStatus(int idEpic) ; //Обновление статуса Epic
 
     void listOfAllSubtasksOfASpecificEpic(Epic epic);//Получение списка всех подзадач определённого tasks.Epic
+
+    List<Task> getHistory();
 }

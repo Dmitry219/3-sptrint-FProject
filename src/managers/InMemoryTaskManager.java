@@ -1,17 +1,20 @@
 package managers;
 
 import tasks.Epic;
+import tasks.Status;
 import tasks.Subtask;
 import tasks.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
-    HashMap<Integer, Task> saveTask = new HashMap<>();
-    HashMap<Integer, Subtask> saveSubtask = new HashMap<>();
-    HashMap<Integer, Epic> saveEpic = new HashMap<>();
+    private final HashMap<Integer, Task> saveTask = new HashMap<>();
+    private final HashMap<Integer, Subtask> saveSubtask = new HashMap<>();
+    private final HashMap<Integer, Epic> saveEpic = new HashMap<>();
     private int generateId = 0;
+    private final HistoryManager historyManager = Managers.getDefaultHistory();
 
     @Override
     public Subtask createSubtask(Subtask subtask){//Создание tasks.Subtask
@@ -40,32 +43,35 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList<Task> getAllTasks(){//Получение списка всех tasks.Task
+    public List<Task> getAllTasks(){//Получение списка всех tasks.Task
         return new ArrayList(saveTask.values());
     }
 
     @Override
-    public ArrayList<Task> getAllEpic(){//Получение списка всех tasks.Epic
+    public List<Task> getAllEpic(){//Получение списка всех tasks.Epic
         return new ArrayList(saveEpic.values());
     }
 
     @Override
-    public ArrayList<Task> getAllSubtask(){//Получение списка всех tasks.Subtask
+    public List<Task> getAllSubtask(){//Получение списка всех tasks.Subtask
         return new ArrayList(saveSubtask.values());
     }
 
     @Override
     public Task getTaskById (int id){//Получение по идентификатору tasks.Task
+        historyManager.add(saveTask.get(id));
         return saveTask.get(id);
     }
 
     @Override
     public Epic getEpicById (int id){//Получение по идентификатору tasks.Epic
+        historyManager.add(saveEpic.get(id));
         return saveEpic.get(id);
     }
 
     @Override
     public Subtask getSubtaskById (int id){//Получение по идентификатору tasks.Subtask
+        historyManager.add(saveSubtask.get(id));
         return saveSubtask.get(id);
     }
 
@@ -195,6 +201,10 @@ public class InMemoryTaskManager implements TaskManager {
                 System.out.println(value);
             }
         }
+    }
+    @Override
+    public List<Task> getHistory(){
+       return new ArrayList<>(historyManager.getHistory());
     }
 
     private int generateId(){//Генерация id
