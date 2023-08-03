@@ -69,13 +69,6 @@ public class InMemoryHistoryManager implements HistoryManager {
                 tail = node.prev;
                 tail.next = null;
             }else{
-                // Вопрос для ревью какой ваирант лучше ?????
-                //1 вариант.
-//                Node<T> prevElment = node.prev;
-//                Node<T> nextElment = node.next;
-//                nextElment.prev = prevElment;
-//                prevElment.next = nextElment;
-                //2 вариант.
                 node.prev.next = node.next;
                 node.next.prev = node.prev;
             }
