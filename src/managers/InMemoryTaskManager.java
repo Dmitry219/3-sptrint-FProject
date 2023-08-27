@@ -16,6 +16,23 @@ public class InMemoryTaskManager implements TaskManager {
     private int generateId = 0;
     private final HistoryManager historyManager = Managers.getDefaultHistory();
 
+    public void addTask(Task task){
+        setGenerateId(task.getId());
+        saveTask.put(task.getId(), task);
+    }
+
+    public void addEpic(Epic epic){
+        setGenerateId(epic.getId());
+        saveEpic.put(epic.getId(), epic);
+    }
+
+    public void addSubtask(Subtask subtask){
+        setGenerateId(subtask.getId());
+        int epicId = subtask.getEpicId();
+        saveSubtask.put(subtask.getId(), subtask);
+        saveEpic.get(epicId).setIdSubtask(subtask);
+    }
+
     @Override
     public Subtask createSubtask(Subtask subtask){//Создание tasks.Subtask
         int id = generateId();
@@ -212,7 +229,29 @@ public class InMemoryTaskManager implements TaskManager {
        return new ArrayList<>(historyManager.getHistory());
     }
 
+    public HistoryManager getHistoryManager (){
+        return historyManager;
+    }
+
+    public void setGenerateId(int id) {
+        if (id > generateId){
+            generateId = id;
+        }
+    }
+
     private int generateId(){//Генерация id
         return ++generateId;
+    }
+
+    public HashMap<Integer, Task> getSaveTask() {
+        return saveTask;
+    }
+
+    public HashMap<Integer, Subtask> getSaveSubtask() {
+        return saveSubtask;
+    }
+
+    public HashMap<Integer, Epic> getSaveEpic() {
+        return saveEpic;
     }
 }

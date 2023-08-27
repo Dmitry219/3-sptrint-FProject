@@ -4,10 +4,13 @@ import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
 
+import java.io.File;
+
 public class Main {
     public static void main(String[] args) {
 
-        TaskManager taskManager = Managers.getDefault();
+        //TaskManager taskManager = Managers.getDefault();
+/*
 
         Task task1 = new Task("Задача 1", "Опиание задчачи");
         Task task2 = new Task("Задача 2", "Опиание задчачи");
@@ -52,5 +55,7 @@ public class Main {
 
         taskManager.deleteTaskByID(task1.getId());
         System.out.println(taskManager.getHistory());
+
+ */
     }
 }
