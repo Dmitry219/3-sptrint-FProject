@@ -1,10 +1,10 @@
 package managers;
 
+import exception.ManagerSaveException;
 import tasks.*;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +16,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
         this.file = file;
     }
 
-    public void save() {//сохранение задач в файл
+    private void save() {//сохранение задач в файл
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))){
             bufferedWriter.write("id,type,name,status,description,epic\n");
             for (Task task : getAllTasks()) {
