@@ -10,10 +10,16 @@ public class Subtask extends Task {
         this.epicId = epicId;
     }
 
-    public Subtask(Integer id, String name, Status status, String description, int epicId) {
-        super(id, name, status, description);
+    public Subtask(Integer id, String name, Status status, String description,String time, int duration, int epicId) {
+        super(id, name, status, description, time, duration);
         this.epicId = epicId;
     }
+
+    public Subtask(String name, String description, String time, int duration, int epicId) {
+        super(name, description, time, duration);
+        this.epicId = epicId;
+    }
+
 
     public int getEpicId() {
         return epicId;
@@ -25,6 +31,19 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
+        return "Subtask{" +
+                "epicId=" + epicId +
+                ", id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", startTime=" + startTime +
+                ", duration=" + duration +
+                '}';
+    }
+
+   /* @Override
+    public String toString() {
         return "tasks.Subtask{" +
                 "epicId=" + getEpicId() +
                 ", id=" + id +
@@ -32,5 +51,5 @@ public class Subtask extends Task {
                 ", description='" + description + '\'' +
                 ", status=" + status +
                 '}' + "\n";
-    }
+    }*/
 }

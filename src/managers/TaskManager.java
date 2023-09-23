@@ -5,6 +5,7 @@ import tasks.Subtask;
 import tasks.Task;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public interface TaskManager {
@@ -45,9 +46,17 @@ public interface TaskManager {
 
     void updateSubtask (Subtask subtask);//обновление Subtask
 
-    void updateEpicStatus(int idEpic) ; //Обновление статуса Epic
+    void updateEpicStatus(int idEpic); //Обновление статуса Epic
+
+    void updateTimeEpic (int idEpic);//Обновление времени Epic
 
     void listOfAllSubtasksOfASpecificEpic(Epic epic);//Получение списка всех подзадач определённого tasks.Epic
 
     List<Task> getHistory();
+
+    HashMap<Integer, Task> getSaveTask();
+
+    HashMap<Integer, Subtask> getSaveSubtask();
+
+    HashMap<Integer, Epic> getSaveEpic();
 }
