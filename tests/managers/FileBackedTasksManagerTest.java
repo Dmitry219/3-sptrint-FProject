@@ -15,7 +15,7 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
     }
 
     @Test
-    public void testFileUpload (){ //тест загрузка файла
+    public void loadFromFileTrue (){ //тест загрузка файла
         taskManager.getTaskById(task1.getId());
         taskManager.getEpicById(epic1.getId());
         taskManager.getSubtaskById(subtask1.getId());

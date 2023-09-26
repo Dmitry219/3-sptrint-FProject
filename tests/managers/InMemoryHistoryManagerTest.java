@@ -30,13 +30,13 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    void testAdd(){//тест получения истории
+    void addTrue(){//тест получения истории
         inMemoryHistoryManager.add(task1);
         Assertions.assertTrue(inMemoryHistoryManager.getHistory().contains(task1), "Задача не прошла");
     }
 
     @Test
-    void testRemove(){//тест удаления
+    void removeFalse(){//тест удаления
         inMemoryHistoryManager.add(task1);
         inMemoryHistoryManager.add(epic1);
         inMemoryHistoryManager.add(subtask1);
@@ -50,7 +50,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    void testGetHistory(){//тест получения истории
+    void getHistoryTrue(){//тест получения истории
         assertTrue(inMemoryHistoryManager.getHistory().isEmpty());
         inMemoryHistoryManager.add(task1);
         assertFalse(inMemoryHistoryManager.getHistory().isEmpty());

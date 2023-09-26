@@ -1,12 +1,14 @@
 package managers;
 
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tasks.Epic;
 import tasks.Status;
 import tasks.Subtask;
 import tasks.Task;
+
+import org.junit.jupiter.api.function.Executable;
 
 abstract class TaskManagerTest<T extends TaskManager> {
     T taskManager;
@@ -32,68 +34,107 @@ abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     @Test
-    public void testEpicList(){//Epic не пустой
-        Assertions.assertFalse(taskManager.getSaveEpic().isEmpty(),"Список пустой");
+    public void createEpicListIsNotEmpty(){//Epic не пустой
+        assertFalse(taskManager.getSaveEpic().isEmpty(),"Список пустой");
     }
 
     @Test
-    public void testEpicStatusNew(){//тест всех подзадч со статусом new
-        Assertions.assertEquals(Status.NEW, taskManager.getSaveEpic().get(epic1.getId()).getStatus(),
-                "Статус Epic не NEW");
+    public void shouldGetTaskById(){//тест возвращение Task по id
+        assertEquals(task1, taskManager.getTaskById(task1.getId()), "Задачи не равны");
     }
 
     @Test
-    public void testEpicStatusDone(){//тест всех подзадч со статусом done
-        subtask1.setStatus(Status.DONE);
-        subtask2.setStatus(Status.DONE);
-        taskManager.updateEpicStatus(epic1.getId());
-
-        Assertions.assertEquals(Status.DONE, taskManager.getSaveEpic().get(epic1.getId()).getStatus(),
-                "Статус Epic не DONE");
+    public void shouldGetEpicById(){//тест возвращение Epic по id
+        assertEquals(epic1, taskManager.getEpicById(epic1.getId()), "Epic не равны");
     }
 
     @Test
-    public void testEpicStatusNewDone(){//тест всех подзадч со статусом new done
-        subtask1.setStatus(Status.NEW);
-        subtask2.setStatus(Status.DONE);
-        taskManager.updateEpicStatus(epic1.getId());
-
-        Assertions.assertEquals(Status.IN_PROGRESS, taskManager.getSaveEpic().get(epic1.getId()).getStatus(),
-                "Статус Epic не IN_PROGRESS");
+    public void shouldGetSubtaskById(){//тест возвращение Subtask по id
+        assertEquals(subtask1, taskManager.getSubtaskById(subtask1.getId()), "Subtask не равны");
     }
 
     @Test
-    public void testEpicStatusIn_progress(){//тест всех подзадч со статусом IN_PROGRESS
-        subtask1.setStatus(Status.IN_PROGRESS);
-        subtask2.setStatus(Status.IN_PROGRESS);
-        taskManager.updateEpicStatus(epic1.getId());
-
-        Assertions.assertEquals(Status.IN_PROGRESS, taskManager.getSaveEpic().get(epic1.getId()).getStatus(),
-                "Статус Epic не IN_PROGRESS");
+    public void shouldDeleteAllTasks(){//тест удаления всех Task
+        taskManager.deleteAllTasks();
+        assertTrue(taskManager.getSaveTask().isEmpty(), "Список Task не удалился");
     }
 
     @Test
-    public void testUpdateEpicStatusWhenDeletingSubtaskWithStatusDone(){//тест всех подзадч со статусом new при удалении Subtask со статусом done
-        subtask1.setStatus(Status.DONE);
-        subtask2.setStatus(Status.NEW);
-        taskManager.updateEpicStatus(epic1.getId());
-        taskManager.deleteSubtaskByID(subtask1.getId());
-        taskManager.updateEpicStatus(epic1.getId());
-
-        Assertions.assertEquals(Status.NEW, taskManager.getSaveEpic().get(epic1.getId()).getStatus(),
-                "Статус Epic не NEW");
+    public void shouldDeleteAllEpic(){//тест удаления всех Epic
+        taskManager.deleteAllEpic();
+        assertTrue(taskManager.getSaveEpic().isEmpty(), "Список Epic не удалиля");
     }
 
     @Test
-    public void testStatusUpdateEpicWhenAllAreDeletedSubtask(){//тест при удлаении всех subtask
-        subtask1.setStatus(Status.DONE);
-        subtask2.setStatus(Status.NEW);
-        taskManager.updateEpicStatus(epic1.getId());
+    public void shouldDeleteAllSubtask(){//тест удаления всех Subtask
         taskManager.deleteAllSubtask();
-        taskManager.updateEpicStatus(epic1.getId());
+        assertTrue(taskManager.getSaveSubtask().isEmpty(), "Список Subtask не удалился");
+    }
 
-        Assertions.assertEquals(Status.NEW, taskManager.getSaveEpic().get(epic1.getId()).getStatus(),
-                "Статус Epic не NEW");
+    @Test
+    public void shouldDeleteTaskByID(){//тест удаление Task по id
+        taskManager.deleteTaskByID(task1.getId());
+        assertFalse(taskManager.getSaveTask().containsKey(task1.getId()), "Task не удлалилась");
+    }
+
+    @Test
+    public void shouldDeleteEpicByID(){//тест удаление Epic по id
+        taskManager.deleteEpicByID(epic1.getId());
+        assertFalse(taskManager.getSaveEpic().containsKey(epic1.getId()), "Epic не удлалилась");
+    }
+
+    @Test
+    public void shouldDeleteSubtaskByID(){//тест удаление Subtask по id
+        taskManager.deleteSubtaskByID(subtask1.getId());
+        assertFalse(taskManager.getSaveSubtask().containsKey(subtask1.getId()), "Subtask не удлалилась");
+    }
+
+    @Test
+    public void shouldUpdateTask(){//тест обновление Task
+        task1.setName("Обновление имени");
+        taskManager.updateTask(task1);
+        assertEquals(task1,taskManager.getTaskById(task1.getId()), "Task не обновилась");
+    }
+
+    @Test
+    public void shouldUpdateEpic(){//тест обновление Epic
+        epic1.setName("Обновление имени");
+        taskManager.updateEpic(epic1);
+        assertEquals(epic1,taskManager.getEpicById(epic1.getId()), "Epic не обновилась");
+    }
+
+    @Test
+    public void shouldUpdateSubtask(){//тест обновление Subtask
+        subtask1.setName("Обновление имени");
+        taskManager.updateSubtask(subtask1);
+        assertEquals(subtask1,taskManager.getSubtaskById(subtask1.getId()), "Subtask не обновилась");
+    }
+
+    @Test
+    public void shouldUpdateTimeEpic(){//тест обновление времени Epic
+        assertEquals(subtask1.getStartTime(),taskManager.getEpicById(epic1.getId()).getStartTime(), "Время старта Epic не обновилась");
+        assertEquals(subtask2.getEndTime(),taskManager.getEpicById(epic1.getId()).getEndTime(), "Время конца Epic не обновилась");
+    }
+
+    @Test
+    public void shouldListOfAllSubtasksOfASpecificEpic(){//тест получение списка всех подзадач определённого Epic
+        assertTrue(taskManager.getEpicById(epic1.getId()).getSubtaskIDs().contains(subtask1.getId()), "Subtask1 нет в списке Epic1");
+        assertTrue(taskManager.getEpicById(epic1.getId()).getSubtaskIDs().contains(subtask2.getId()), "Subtask2 нет в списке Epic1");
+
+    }
+
+    @Test
+    public void shouldValidate() {//тест нейтрализации пересекаемых задач
+        subtask1.setDuration(15);
+        final RuntimeException exception = assertThrows(
+                RuntimeException.class,
+                new Executable() {
+                    @Override
+                    public void execute() {
+                        taskManager.updateSubtask(subtask1);
+                    }
+                });
+        assertEquals("Задача пересекается", exception.getMessage());
     }
 
 }

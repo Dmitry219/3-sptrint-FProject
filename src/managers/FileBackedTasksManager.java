@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FileBackedTasksManager extends InMemoryTaskManager{
     private final File file;
@@ -97,9 +98,9 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
     }
 
     public Task searchTask (int id){// поиск задач
-        HashMap<Integer, Task> mapTask = getSaveTask();
-        HashMap<Integer, Epic> mapEpic = getSaveEpic();
-        HashMap<Integer, Subtask> mapSubtask = getSaveSubtask();
+        Map<Integer, Task> mapTask = getSaveTask();
+        Map<Integer, Epic> mapEpic = getSaveEpic();
+        Map<Integer, Subtask> mapSubtask = getSaveSubtask();
         if(mapTask.containsKey(id)){
             return mapTask.get(id);
         }else if(mapEpic.containsKey(id)){
